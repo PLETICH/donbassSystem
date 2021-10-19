@@ -1,0 +1,28 @@
+const Discord = module.require("discord.js");
+let xp = require('../xp.json')
+module.exports.run = async (bot,message,args) => {
+  
+let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+if(!rUser) {
+    let sweetsEmbed = new Discord.RichEmbed()
+    .setTitle(`Твой Баланс`)
+    .setDescription(`Продолжай активничать в том же духе и получай все больше очков =^)`)
+    .addField(`🍬 Количество всего очков:`, `${xp[message.author.id].xp}`)
+    .setColor("#f5690d")
+    .setFooter(`ID: ${message.author.id} • ${message.createdAt}`)
+    .setThumbnail(message.author.displayAvatarURL)
+    message.channel.send(sweetsEmbed)
+} else {
+    let sweetsEmbed = new Discord.RichEmbed()
+    .setTitle(`Баланс ${rUser.user.tag}`)
+    .setDescription(`Класс! старается быть активным, молодец =^)`)
+    .addField(`🍬 Количество всего очков:`, `${xp[rUser.id].xp}`)
+    .setColor("#6fa1c0")
+    .setFooter(`ID: ${rUser.id} • ${message.createdAt}`)
+    .setThumbnail(rUser.user.displayAvatarURL)
+    message.channel.send(sweetsEmbed)
+}
+}
+module.exports.help = {
+    name: "balance"
+};
