@@ -1,0 +1,24 @@
+let xpAdd = Math.floor(Math.random() * 1) + 100;
+    console.log(xpAdd);
+  
+    if(!xp[message.author.id]){
+      xp[message.author.id] = {
+        xp: 0
+      };
+    }
+  
+  let curxp = xp[message.author.id].xp;
+  xp[message.author.id].xp = curxp + xpAdd;
+
+  fs.writeFile('./xp.json',JSON.stringify(xp),(err) => {
+    if(err) console.log(err);
+    const logChannel = message.guild.channels.find(channel => channel.id === '900054877919658064') 
+    let xpEmbed = new Discord.RichEmbed()
+    .setTitle(`Пользователь ${message.author.tag}`)
+    .setDescription(`<@${message.author.id}> только что получил 100 очков за сообщение =^)`)
+    .addField(`🍬 Количество всего очков:`, `${xp[message.author.id].xp}`)
+    .setColor("#ffce2d")
+    .setFooter(`ID: ${message.author.id} • ${message.createdAt}`)
+    .setThumbnail(message.author.displayAvatarURL)
+    logChannel.send(xpEmbed)
+});
